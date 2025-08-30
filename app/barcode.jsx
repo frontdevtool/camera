@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Text, View, Button, StyleSheet } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function Barcode() {
   const [permission, requestPermission] = useCameraPermissions();
   const [scannedData, setScannedData] = useState(null);
 
-  if (!permission) return <View />;
+  if (!permission) return <ActivityIndicator />;
 
   if (!permission.granted) {
     return (
       <View style={styles.container}>
-        <Text>نحتاج إذنك لاستخدام الكاميرا</Text>
+        <ActivityIndicator />
+        <Text className="bg-red-300">نحتاج إذنك لاستخدام الكاميرا</Text>
         <Button title="امنح الإذن" onPress={requestPermission} />
       </View>
     );
