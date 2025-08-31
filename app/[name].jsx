@@ -5,18 +5,18 @@ import * as FileSystem from "expo-file-system";
 export default function ImagePreview() {
   const { name } = useLocalSearchParams();
 
-  const fullUri = FileSystem.documentDirectory + name;
+  const fullUri = (FileSystem.documentDirectory || '') + (name || '');
   console.log('fullUri: ', fullUri);
 
   return (
     <View style={{ flex: 1 }}>
       <Stack.Screen options={{ title: "image Screen"+name }} />
-      <Text>{fullUri}</Text>
+      {/* <Text>{fullUri}</Text> */}
 
-      {/* <Image
+      <Image
         source={{ uri: fullUri }}
         style={{ width: "100%", height: "100%" }}
-      /> */}
+      />
     </View>
   );
 }

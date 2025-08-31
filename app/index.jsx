@@ -20,18 +20,20 @@ const index = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
+    console.log('loadFiles: useEffect ');
     loadFiles();
   }, []);
 
   const loadFiles = async () => {
+    console.log('loadFiles function: ', );
     if (!FileSystem.documentDirectory) {
       return;
     }
     const files = await FileSystem.readDirectoryAsync(
       FileSystem.documentDirectory
     );
-    console.log("files: ", files);
-    console.log("files length: ", files.length);
+    // console.log("files: ", files);
+    // console.log("files length: ", files.length);
     // setImages(files)
     setImages(
       files.map((file) => ({
@@ -41,15 +43,16 @@ const index = () => {
     );
 
   };
-  console.log("==> out", JSON.stringify(images, null, 2));
+  // console.log("==> out", JSON.stringify(images, null, 2));
 
   return (
     <View className=" ">
       <FlatList
       scrollEnabled
   data={images}
-  numColumns={3}
-  contentContainerStyle={{ gap: 1 }}
+  numColumns={6}
+  // initialNumToRender={5}
+  contentContainerStyle={{ gap:1 }}
   columnWrapperStyle={{ gap: 1 }}
   refreshing={false}
   onRefresh={loadFiles}
@@ -66,7 +69,10 @@ const index = () => {
     </Link>
   )}
 />
-      <Link href="/camera">camera</Link>
+
+
+      <Link href="/camera" className="text-xl text-center  m-auto p-2 mt-10 rounded-md bg-red-300 ">camera</Link>
+
     </View>
   );
 };
@@ -89,6 +95,8 @@ const styles = StyleSheet.create({
   image: {
   aspectRatio: 3 / 4,
   borderRadius: 1,
+  // width:100,
+  // height: 100
   
 },
 });
