@@ -10,19 +10,26 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as FileSystem from "expo-file-system";
 
 import "./global.css";
-import { Link } from "expo-router";
+import { Link, useFocusEffect } from "expo-router";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import Barcode from "./barcode";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const index = () => {
   const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    console.log('loadFiles: useEffect ');
+  // useEffect(() => {
+  //   console.log('loadFiles: useEffect ');
+  //   loadFiles();
+  // }, []);
+  
+  useFocusEffect(
+    useCallback(() => {
+    console.log('loadFiles: useEffect ')
     loadFiles();
-  }, []);
+  }, [])
+);
 
   const loadFiles = async () => {
     console.log('loadFiles function: ', );
@@ -32,9 +39,7 @@ const index = () => {
     const files = await FileSystem.readDirectoryAsync(
       FileSystem.documentDirectory
     );
-    // console.log("files: ", files);
-    // console.log("files length: ", files.length);
-    // setImages(files)
+
     setImages(
       files.map((file) => ({
         name: file,
@@ -44,7 +49,7 @@ const index = () => {
 
   };
   // console.log("==> out", JSON.stringify(images, null, 2));
-
+console.log('==>images len',    images.length)
   return (
     <View className=" ">
       <FlatList
